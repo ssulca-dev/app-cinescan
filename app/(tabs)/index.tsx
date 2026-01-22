@@ -1,98 +1,142 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+export default function CineScanApp() {
+    return (
+        <View style={styles.container}>
+            {/* Header */}
+            <View style={styles.header}>
+                <Text style={styles.logo}>CINESCAN</Text>
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+            {/* BOTÓN CÁMARA */}
+            <TouchableOpacity onPress={() => router.push('/camera')}>
+                <Ionicons name="camera-outline" size={28} color="#fff" />
+            </TouchableOpacity>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+            </View>
+
+            {/* Main Content */}
+            <ScrollView style={styles.content}>
+                <View style={styles.mainCard} />
+
+                <View style={styles.themeContainer}>
+                    <TouchableOpacity style={styles.themeButton}>
+                        <Text style={styles.themeText}>Tema 1</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.themeButton}>
+                        <Text style={styles.themeText}>Tema 2</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.themeButton}>
+                        <Text style={styles.themeText}>Tema 3</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.themeButton}>
+                        <Text style={styles.themeText}>Tema 4</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <Text style={styles.recommendedTitle}>Recomendado para ti</Text>
+                <View style={styles.recommendedContainer}>
+                    <View style={styles.recommendedCard} />
+                    <View style={styles.recommendedCard} />
+                </View>
+            </ScrollView>
+
+            {/* Bottom Navigation */}
+            <View style={styles.bottomNav}>
+                <TouchableOpacity style={styles.navButton}>
+                    <Ionicons name="home" size={28} color="#fff" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton}>
+                    <Ionicons name="search" size={28} color="#6B7280" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton}>
+                    <Ionicons name="person-outline" size={28} color="#6B7280" />
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#000',
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingTop: 50,
+        paddingBottom: 20,
+        backgroundColor: '#000',
+    },
+    logo: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#fff',
+        letterSpacing: 2,
+    },
+    content: {
+        flex: 1,
+        paddingHorizontal: 20,
+    },
+    mainCard: {
+        width: '100%',
+        height: 360,
+        backgroundColor: '#4B5563',
+        borderRadius: 20,
+        marginTop: 10,
+    },
+    themeContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 20,
+        marginBottom: 30,
+    },
+    themeButton: {
+        backgroundColor: '#4B5563',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 25,
+    },
+    themeText: {
+        color: '#D1D5DB',
+        fontSize: 14,
+    },
+    recommendedTitle: {
+        color: '#fff',
+        fontSize: 16,
+        marginBottom: 15,
+    },
+    recommendedContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 100,
+    },
+    recommendedCard: {
+        width: '48%',
+        height: 200,
+        backgroundColor: '#4B5563',
+        borderRadius: 15,
+    },
+    bottomNav: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: '#000',
+        paddingVertical: 15,
+        paddingBottom: 30,
+        borderTopWidth: 1,
+        borderTopColor: '#1F2937',
+    },
+    navButton: {
+        padding: 10,
+    },
 });
